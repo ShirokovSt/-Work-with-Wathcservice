@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository
 import javax.annotation.PostConstruct
 
 @Repository
-class PersonRepositoryImpl (
+class PersonRepositoryImpl(
     private val jdbcTemplate: NamedParameterJdbcTemplate,
     private val jdbcTemplateForCreateTable: JdbcTemplate
-): PersonRepository {
+) : PersonRepository {
 
     @PostConstruct
     fun init() {
@@ -22,7 +22,7 @@ class PersonRepositoryImpl (
         )
     }
 
-    override fun addPerson(name: String, lastName: String) : Boolean {
+    override fun addPerson(name: String, lastName: String): Boolean {
 
 
         if (jdbcTemplate.query(
@@ -50,7 +50,7 @@ class PersonRepositoryImpl (
 
     private companion object {
         val ROW_MAPPER = RowMapper<Person> { rs, _ ->
-            Person (
+            Person(
                 id = rs.getInt("id"),
                 name = rs.getString("name"),
                 lastName = rs.getString("last_name")

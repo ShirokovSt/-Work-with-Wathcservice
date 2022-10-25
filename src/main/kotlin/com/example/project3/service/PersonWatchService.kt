@@ -1,6 +1,6 @@
 package com.example.project3.service
 
-interface PersonService {
+interface PersonWatchService {
 
     fun personSearch()
 }

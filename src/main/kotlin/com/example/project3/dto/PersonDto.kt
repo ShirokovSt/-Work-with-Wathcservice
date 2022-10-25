@@ -1,6 +1,6 @@
 package com.example.project3.dto
 
-class PersonDto (
+class PersonDto(
 
     val name: String = "",
 

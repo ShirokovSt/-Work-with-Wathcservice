@@ -11,17 +11,16 @@ import java.nio.file.*
 import java.util.*
 
 @Service
-class PersonServiceImpl(
-    private val  watchService : WatchService = FileSystems.getDefault().newWatchService(),
-    private val path : Path = Paths.get(System.getProperty("user.dir") + "/persons"),
-    private val objectMapper : ObjectMapper,
-    private  val personRepository: PersonRepository,
+class PersonWatchServiceImpl(
+    private val watchService: WatchService = FileSystems.getDefault().newWatchService(),
+    private val path: Path = Paths.get(System.getProperty("user.dir") + "/persons"),
+    private val objectMapper: ObjectMapper,
+    private val personRepository: PersonRepository,
 
-) : PersonService {
+    ) : PersonWatchService {
 
     companion object {
-        private val logger
-                = getLogger(PersonServiceImpl::class.java)
+        private val logger = getLogger(PersonWatchService::class.java)
     }
 
     @Scheduled(fixedDelay = Long.MAX_VALUE)
@@ -39,7 +38,7 @@ class PersonServiceImpl(
                         Array<PersonDto>::class.java
                     ).toList()
                 for (person in listPersons)
-                    if(!personRepository.addPerson(person.name, person.lastName))
+                    if (!personRepository.addPerson(person.name, person.lastName))
                         logger.info("ignoring Person{ ${person.name}, ${person.lastName}}")
             }
             key.reset()
